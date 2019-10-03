@@ -33,21 +33,22 @@ export default class App extends React.Component {
 		let simplex = new Simplex(JSON.parse(JSON.stringify(this.matriz)))
 		simplex.resolver().map((iteracao) => iteracoes.push(iteracao))
 		let solucao = "Solução: "
-		for (let l = 1; l <= this.state.quantidadeVariaveis; l++) {
-			let valor = 0
-			for (let c = 0; c <= this.state.quantidadeRestricoes; c++) {
-				if (simplex.matriz[l][c] === 1) {
-					valor = simplex.matriz[c][simplex.colunas() - 1];
+
+		for (let l = 1; l <= this.state.quantidadeRestricoes; l++) {
+			for (let c = 1; c <= this.state.quantidadeVariaveis; c++) {
+				if (simplex.matriz[l][c] == 1) {
+					if (l == this.state.quantidadeRestricoes) {
+						solucao += `x${c} = ${simplex.matriz[l][simplex.colunas() - 1]}`
+					}
+					else {
+						solucao += `x${c} = ${simplex.matriz[l][simplex.colunas() - 1]}, `
+					}
 					break;
 				}
 			}
-			if (l === this.state.quantidadeVariaveis) {
-				solucao += "x" + l + " = " + valor;
-			} else {
-				solucao += "x" + l + " = " + valor + ", ";
-			}
 		}
-		solucao += " e Z = " + simplex.matriz[0][simplex.colunas() - 1];
+
+		solucao += ` e Z = ${simplex.matriz[0][simplex.colunas() - 1]}`;
 
 		this.setState({
 			iteracoes: iteracoes,
@@ -103,7 +104,6 @@ export default class App extends React.Component {
 		let inputsZ = document.querySelectorAll(".inputZ");
 		let indiceZ = 0
 		let funcaoObjetivo = [1]
-		console.log(this.state.quantidadeVariaveis + this.state.quantidadeRestricoes)
 		for (let i = 0; i < this.state.quantidadeVariaveis + this.state.quantidadeRestricoes + 1; i++) {
 			if (inputsZ[i] == undefined) {
 				funcaoObjetivo[i + 1] = 0
