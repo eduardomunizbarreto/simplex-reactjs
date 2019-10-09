@@ -4,12 +4,7 @@ import Simplex from './models/Simplex'
 import { Form, Button, ButtonToolbar, Container, Col, Row, Table } from 'react-bootstrap'
 
 export default class App extends React.Component {
-	matriz = [
-		[1, -3, 5, 0, 0, 0, 0],
-		[0, 2, 4, 1, 0, 0, 10],
-		[0, 6, 1, 0, 1, 0, 20],
-		[0, 1, -1, 0, 0, 1, 30],
-	]
+	matriz = []
 	iteracoes = []
 	state = {
 		iteracoes: this.iteracoes,
@@ -89,9 +84,10 @@ export default class App extends React.Component {
 				linha[c + 1] = Number(inputsR[c].value)
 			}
 
-			for (let o = this.state.quantidadeVariaveis + 1; o <= this.state.quantidadeVariaveis + this.state.quantidadeRestricoes; o++) {
-				linha[o] = (l - 1 == o - this.state.quantidadeRestricoes) ? 1 : 0
+			for (let o = 1; o <= this.state.quantidadeRestricoes; o++) {
+				linha[o + this.state.quantidadeVariaveis] = (l === o) ? 1 : 0
 			}
+			
 			linha[linha.length] = Number(inputsB[l - 1].value)
 			this.matriz[l] = JSON.parse(JSON.stringify(linha))
 		}
