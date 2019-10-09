@@ -35,7 +35,7 @@ export default class App extends React.Component {
 		let solucao = "Solução: "
 
 		for (let l = 1; l <= this.state.quantidadeRestricoes; l++) {
-			for (let c = 1; c <= this.state.quantidadeVariaveis; c++) {
+			for (let c = 1; c <= this.state.quantidadeVariaveis + this.state.quantidadeRestricoes; c++) {
 				if (simplex.matriz[l][c] == 1) {
 					if (l == this.state.quantidadeRestricoes) {
 						solucao += `x${c} = ${simplex.matriz[l][simplex.colunas() - 1]}`
@@ -117,7 +117,7 @@ export default class App extends React.Component {
 		}
 		this.matriz[indiceZ] = funcaoObjetivo
 
-		console.table(this.matriz)		
+		console.table(this.matriz)
 	}
 
 	mostrarBotoes() {
@@ -213,7 +213,7 @@ export default class App extends React.Component {
 			return (
 				<tr className={(indiceLinha === iteracao.linhaPivo) && (iteracao.showBorder) ? 'linha-pivo' : ''} key={indiceLinha}>
 					{linha.map((valor, indiceValor) => {
-						return (<td className={(valor === iteracao.elementoPivo) && (iteracao.showBorder) ? 'elemento-pivo' : (indiceValor === iteracao.colEntra) && (iteracao.showBorder) ? 'col-entra' : ''} key={indiceLinha + "" + indiceValor}>{valor}</td>)
+						return (<td className={((indiceLinha === iteracao.linhaPivo) && (indiceValor === iteracao.colEntra)) && (iteracao.showBorder) ? 'elemento-pivo' : (indiceValor === iteracao.colEntra) && (iteracao.showBorder) ? 'col-entra' : ''} key={indiceLinha + "" + indiceValor}>{valor}</td>)
 					})}
 				</tr>
 			)

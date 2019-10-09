@@ -105,7 +105,7 @@ export default class Simplex {
 			let valor = this.matriz[indiceZ][i]
 			if (valor < 0) {
 				let valorAbs = Math.abs(this.matriz[indiceZ][i])
-				if (valorAbs > maiorAbs) {
+				if (valorAbs >= maiorAbs) {
 					maiorAbs = valorAbs
 					indiceEntra = i
 				}
